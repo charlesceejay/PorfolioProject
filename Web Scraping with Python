@@ -1,0 +1,59 @@
+from bs4 import BeautifulSoup
+import requests
+url = 'https://en.wikipedia.org/wiki/List_of_largest_companies_in_the_United_States_by_revenue'
+page = requests.get(url)
+
+soup = BeautifulSoup(page.text, 'html')
+soup.find_all('table')[1]
+
+table = soup.find_all('table')[1]
+table.find_all('th')
+world_titles = table.find_all('th')
+table_title = [title.text for title in world_titles]
+
+import pandas as pd
+df = pd.DataFrame(columns = table_title)
+
+table.find_all('tr')
+Column_Data = table.find_all('tr')
+for row in Column_Data:
+
+for row in Column_Data:
+    row_data = row.find_all('td')
+    table_row_data2 = [data.text.strip() for data in row_data]
+
+for row in Column_Data[1:]:
+    row_data = row.find_all('td')
+    table_row_data2 = [data.text.strip() for data in row_data]
+
+for row in Column_Data[1:]:
+    row_data = row.find_all('td')
+    table_row_data2 = [data.text.strip() for data in row_data]
+    
+    
+    length = len(df)
+    df.loc[length] = table_row_data2
+
+df
+
+--This is the data collected
+
+Rank	Name	Industry	Revenue (USD millions)	Revenue growth	Employees	Headquarters
+0	1	Walmart	Retail	611,289	6.7%	2,100,000	Bentonville, Arkansas
+1	2	Amazon	Retail and cloud computing	513,983	9.4%	1,540,000	Seattle, Washington
+2	3	ExxonMobil	Petroleum industry	413,680	44.8%	62,000	Spring, Texas
+3	4	Apple	Electronics industry	394,328	7.8%	164,000	Cupertino, California
+4	5	UnitedHealth Group	Healthcare	324,162	12.7%	400,000	Minnetonka, Minnesota
+...	...	...	...	...	...	...	...
+95	96	Best Buy	Retail	46,298	10.6%	71,100	Richfield, Minnesota
+96	97	Bristol-Myers Squibb	Pharmaceutical industry	46,159	0.5%	34,300	New York City, New York
+97	98	United Airlines	Airline	44,955	82.5%	92,795	Chicago, Illinois
+98	99	Thermo Fisher Scientific	Laboratory instruments	44,915	14.5%	130,000	Waltham, Massachusetts
+99	100	Qualcomm	Technology	44,200	31.7%	51,000	San Diego, California
+
+---Then it was exported as a csv file
+
+df.to_csv(r'C:\Users\DELL\OneDrive\Dokumente\Web scrapping\companies.csv', index = False)
+
+
+
